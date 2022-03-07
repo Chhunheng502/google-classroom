@@ -13,16 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('classrooms', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password')->nullable();
-            $table->rememberToken();
-            $table->string('google_id')->nullable();
-            $table->string('google_token')->nullable();
-            $table->string('google_refreshToken')->nullable();
+            $table->text('description')->nullable();
+            $table->string('section')->nullable();
+            $table->string('room')->nullable();
+            $table->string('subject')->nullable();
+            $table->string('code', 7)->unique();
+            $table->string('theme_path')->default('images/img_breakfast.jpg');
             $table->timestamps();
         });
     }
@@ -34,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('classrooms');
     }
 };
