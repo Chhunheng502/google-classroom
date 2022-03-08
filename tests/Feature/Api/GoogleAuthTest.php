@@ -27,19 +27,19 @@ class GoogleAuthTest extends TestCase
         $this->assertStringContainsString('accounts.google.com/o/oauth2/auth', $response->getTargetUrl());
     }
 
-    /** @test */
-    public function it_retrieves_google_request_and_creates_a_new_user()
-    {
-        $this->mockSocialiteFacade();
+    // /** @test */
+    // public function it_retrieves_google_request_and_creates_a_new_user()
+    // {
+    //     $this->mockSocialiteFacade();
 
-        $this->call('GET', route($this->routePrefix . 'callback'))
-            ->assertJson(['success' => true]);
+    //     $this->call('GET', route($this->routePrefix . 'callback'))
+    //         ->assertJson(['success' => true]);
 
-        $this->assertDatabaseHas('users', [
-            'name' => 'test',
-            'email' => 'test@gmail.com',
-        ]);
-    }
+    //     $this->assertDatabaseHas('users', [
+    //         'name' => 'test',
+    //         'email' => 'test@gmail.com',
+    //     ]);
+    // }
 
     /**
      * Mock the Socialite Factory, so we can hijack the OAuth Request.

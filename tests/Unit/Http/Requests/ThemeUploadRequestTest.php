@@ -3,9 +3,11 @@
 namespace Tests\Unit\Http\Requests;
 
 use App\Models\Classroom;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class ThemeUploadRequestTest extends TestCase
@@ -17,6 +19,11 @@ class ThemeUploadRequestTest extends TestCase
     /** @test */
     public function theme_must_be_a_file()
     {
+        Sanctum::actingAs(
+            User::factory()->create(),
+            ['*']
+        );
+
         $validatedField = 'theme_path';
         $brokenRule = 'not-file';
 
@@ -35,6 +42,11 @@ class ThemeUploadRequestTest extends TestCase
     /** @test */
     public function theme_must_have_specified_image_extensions()
     {
+        Sanctum::actingAs(
+            User::factory()->create(),
+            ['*']
+        );
+        
         Storage::fake('public');
 
         $validatedField = 'theme_path';

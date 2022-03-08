@@ -43,10 +43,13 @@ class LoginController extends Controller
                 'google_refreshToken' => $googleUser->refreshToken
             ]);
         };
+
+        // use env variable - (fix needed)
+        $token = $user->createToken('http://google-classroom-v1.0.test')->plainTextToken;
         
         return response()->json([
             'success' => true,
-            'token' => $googleUser->token
+            'token' => $token
         ]);
     }
 }

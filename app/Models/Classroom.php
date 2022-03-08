@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\Nulls\NullTeacher;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Classroom extends Model
 {
@@ -11,8 +13,10 @@ class Classroom extends Model
 
     protected $fillable = ['name', 'description', 'section', 'room', 'subject', 'code', 'theme_path'];
 
-    public static function test($num)
+    public function teacher()
     {
-        return 'working';
+        return $this->belongsTo(User::class)->withDefault(
+            NullTeacher::make()->toArray()
+        );
     }
 }

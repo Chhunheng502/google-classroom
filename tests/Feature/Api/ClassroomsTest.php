@@ -3,8 +3,10 @@
 namespace Tests\Feature\Api;
 
 use App\Models\Classroom;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class ClassroomsTest extends TestCase
@@ -16,6 +18,11 @@ class ClassroomsTest extends TestCase
     /** @test */
     public function can_get_all_classrooms()
     {
+        Sanctum::actingAs(
+            User::factory()->create(),
+            ['*']
+        );
+
         $classroom = Classroom::factory()->create();
 
         $response = $this->getJson(route($this->routePrefix . 'index'));
@@ -41,6 +48,11 @@ class ClassroomsTest extends TestCase
     /** @test */
     public function can_store_a_classroom()
     {
+        Sanctum::actingAs(
+            User::factory()->create(),
+            ['*']
+        );
+
         $newClassroom = collect(Classroom::factory()->raw())->except(['code']);
 
         $response = $this->postJson(
@@ -66,6 +78,11 @@ class ClassroomsTest extends TestCase
     /** @test */
 	public function can_update_a_classroom()
 	{
+        Sanctum::actingAs(
+            User::factory()->create(),
+            ['*']
+        );
+
 		$existingClassroom = Classroom::factory()->create();
 		$newClassroom = Classroom::factory()->make();
 		  
@@ -94,6 +111,11 @@ class ClassroomsTest extends TestCase
 	/** @test */
 	public function can_delete_a_classroom() 
 	{
+        Sanctum::actingAs(
+            User::factory()->create(),
+            ['*']
+        );
+        
 		$existingClassroom = Classroom::factory()->create();
 
 		$this->deleteJson(
