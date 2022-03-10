@@ -22,31 +22,29 @@ class LoginController extends Controller
     }
 
     public function handleGoogleCallback()
-    {        
+    {
         $googleUser = $this->socialite::driver('google')->stateless()->user();
 
         $user = User::where('google_id', $googleUser->id)->first();
 
-        if($user) {
-            
+        if ($user) {
             $user->update([
                 'google_token' => $googleUser->token,
                 'google_refreshToken' => $googleUser->refreshToken
             ]);
         } else {
-
             $user = User::create([
                 'name' => $googleUser->name,
                 'email' => $googleUser->email,
-                'google_id'=> $googleUser->id,
+                'google_id' => $googleUser->id,
                 'google_token' => $googleUser->token,
                 'google_refreshToken' => $googleUser->refreshToken
             ]);
         };
 
-        // use env variable - (fix needed)
+        // FIXME [should use env variable]
         $token = $user->createToken('http://google-classroom-v1.0.test')->plainTextToken;
-        
+
         return response()->json([
             'success' => true,
             'token' => $token

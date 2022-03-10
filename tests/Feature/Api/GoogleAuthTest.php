@@ -58,7 +58,7 @@ class GoogleAuthTest extends TestCase
 
         $provider = Mockery::mock(
             GoogleProvider::class,
-            function(MockInterface $mock) use ($socialiteUser) {
+            function (MockInterface $mock) use ($socialiteUser) {
                 $mock->shouldReceive('user')
                     ->andReturn($socialiteUser);
             }

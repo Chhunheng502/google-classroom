@@ -2,7 +2,8 @@
 
 namespace App\Providers;
 
-use App\Models\User;
+use App\Models\Classroom;
+use App\Policies\ClassroomPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,7 +18,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+        Classroom::class => ClassroomPolicy::class
     ];
 
     /**
@@ -29,9 +30,13 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Auth::viaRequest('custom-token', function (Request $request) {
+        // NOTE [you don't need to customer Auth user by your own, you can
+        // use Auth::user() right after you include bearer token in your request]
+        // => delete it in the new version
+        
+        // Auth::viaRequest('custom-token', function (Request $request) {
             
-            return PersonalAccessToken::findToken($request->token)->tokenable;
-        });
+        //     return PersonalAccessToken::findToken($request->token)->tokenable;
+        // });
     }
 }

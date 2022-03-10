@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 
 class ThemeUploadController extends Controller
 {
+    // FIXME [must change to cloud storage]
     public function update(ThemeUploadRequest $request, Classroom $classroom)
     {
         $classroom->theme_path = $request->theme_path->store('images', 'public');

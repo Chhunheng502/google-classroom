@@ -40,6 +40,7 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        // NOTE [delete this in the new version]
         'api' => [
             'driver' => 'custom-token',
         ],

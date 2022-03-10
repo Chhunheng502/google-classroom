@@ -11,123 +11,86 @@ use Tests\TestCase;
 
 class ClassroomRequestTest extends TestCase
 {
-    use RefreshDatabase;  
-  
-    private string $routePrefix = 'api.classrooms.';  
+    use RefreshDatabase;
+
+    private string $routePrefix = 'api.classrooms.';
 
     /** @test */
     public function name_is_required()
+    {
+        $this->assertValidationError('name', null);
+    }
+
+    /** @test */
+    public function name_must_not_exceed_255_characters()
+    {
+        $this->assertValidationError('name', str::random(256));
+    }
+
+    /** @test */
+    public function code_is_not_required()
     {
         Sanctum::actingAs(
             User::factory()->create(),
             ['*']
         );
 
-        $validatedField = 'name';
-        $brokenRule = null;
-        
+        // code is already included
+        $classroom = Classroom::factory()->make();
+
+        $this->postJson(
+            route($this->routePrefix . 'store'),
+            $classroom->toArray()
+        )->assertJsonMissingExact([
+            'data' => [
+                'code' => $classroom->code
+            ]
+        ]);
+    }
+
+    /** @test */
+    public function section_must_not_exceed_255_characters()
+    {
+        $this->assertValidationError('section', str::random(256));
+    }
+
+    /** @test */
+    public function room_must_not_exceed_255_characters()
+    {
+        $this->assertValidationError('room', str::random(256));
+    }
+    
+    /** @test */
+    public function subject_must_not_exceed_255_characters()
+    {
+        $this->assertValidationError('section', str::random(256));   
+    }
+
+    public function assertValidationError(string $validatedField, ?string $brokenRule)
+    {
+        $user = Sanctum::actingAs(
+            User::factory()->create(),
+            ['*']
+        );
+
         $classroom = Classroom::factory()->make([
             $validatedField => $brokenRule
         ]);
-   
+
         $this->postJson(
             route($this->routePrefix . 'store'),
             $classroom->toArray()
         )->assertJsonValidationErrors($validatedField);
 
         // Update assertion
-        $existingClassroom = Classroom::factory()->create(); 
-        $newClassroom = Classroom::factory()->make([ 
-            $validatedField => $brokenRule 
-        ]); 
+        $existingClassroom = Classroom::factory()->for($user, 'teacher')->create();
+        $newClassroom = Classroom::factory()->make([
+            $validatedField => $brokenRule
+        ]);
 
         $this->putJson(
             route($this->routePrefix . 'update', $existingClassroom),
             $newClassroom->toArray()
-        )->assertJsonValidationErrors($validatedField);
-    }
-
-    /** @test */
-    public function name_must_not_exceed_255_characters()  
-    {
-        Sanctum::actingAs(
-            User::factory()->create(),
-            ['*']
-        );
-
-        $validatedField = 'name';  
-        $brokenRule = str::random(256);  
-        
-        $classroom = Classroom::factory()->make([  
-            $validatedField => $brokenRule  
-        ]);  
-
-        $this->postJson(  
-            route($this->routePrefix . 'store'),  
-            $classroom->toArray()  
-        )->assertJsonValidationErrors($validatedField);  
-    }
-
-    /** @test */
-    public function section_must_not_exceed_255_characters()  
-    {
-        Sanctum::actingAs(
-            User::factory()->create(),
-            ['*']
-        );
-
-        $validatedField = 'section';  
-        $brokenRule = str::random(256);  
-        
-        $classroom = Classroom::factory()->make([  
-            $validatedField => $brokenRule  
-        ]);  
-
-        $this->postJson(  
-            route($this->routePrefix . 'store'),  
-            $classroom->toArray()  
-        )->assertJsonValidationErrors($validatedField);  
-    }
-
-    /** @test */
-    public function room_must_not_exceed_255_characters()
-    {
-        Sanctum::actingAs(
-            User::factory()->create(),
-            ['*']
-        );
-
-        $validatedField = 'room';
-        $brokenRule = str::random(256);
-        
-        $classroom = Classroom::factory()->make([
-            $validatedField => $brokenRule
-        ]);
-
-        $this->postJson(
-            route($this->routePrefix . 'store'),
-            $classroom->toArray()
-        )->assertJsonValidationErrors($validatedField);
-    }
-
-    /** @test */
-    public function subject_must_not_exceed_255_characters()
-    {
-        Sanctum::actingAs(
-            User::factory()->create(),
-            ['*']
-        );
-
-        $validatedField = 'subject';
-        $brokenRule = str::random(256);
-        
-        $classroom = Classroom::factory()->make([
-            $validatedField => $brokenRule
-        ]);
-    
-        $this->postJson(
-            route($this->routePrefix . 'store'),
-            $classroom->toArray()
         )->assertJsonValidationErrors($validatedField);
     }
 }

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\ClassroomController;
 use App\Http\Controllers\Api\ThemeUploadController;
+use App\Models\Classroom;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -18,6 +19,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/* TODO   
+ * 
+ * 
+ * 
+*/
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -29,8 +36,8 @@ Route::name('api.classrooms.')->middleware('auth:sanctum')->group(function() {
 
     Route::get('classrooms', [ClassroomController::class, 'index'])->name('index');
     Route::post('classrooms', [ClassroomController::class, 'store'])->name('store');
-    Route::put('classrooms/{classroom}', [ClassroomController::class, 'update'])->name('update');
-    Route::delete('classrooms/{classroom}', [ClassroomController::class, 'destroy'])->name('destroy');
+    Route::put('classrooms/{classroom}', [ClassroomController::class, 'update'])->name('update')->can('update', 'classroom');
+    Route::delete('classrooms/{classroom}', [ClassroomController::class, 'destroy'])->name('destroy')->can('delete', 'classroom');
 
     Route::put('classrooms/{classroom}/theme', [ThemeUploadController::class, 'update'])->name('theme.update');
 });

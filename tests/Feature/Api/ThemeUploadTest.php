@@ -38,13 +38,13 @@ class ThemeUploadTest extends TestCase
             $updatedField
         );
 
-        Storage::disk('public')->assertExists('images/'.$file->hashName());
+        Storage::disk('public')->assertExists('images/' . $file->hashName());
 
-		$response->assertJson([
-			'data' => [
-				'id' => $existingClassroom->id,
-				'theme_path' => 'images/' . $file->hashName()
-			]
-		]);
+        $response->assertJson([
+            'data' => [
+                'id' => $existingClassroom->id,
+                'theme_path' => 'images/' . $file->hashName()
+            ]
+        ]);
     }
 }

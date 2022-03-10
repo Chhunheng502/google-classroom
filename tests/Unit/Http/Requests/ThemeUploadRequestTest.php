@@ -46,7 +46,7 @@ class ThemeUploadRequestTest extends TestCase
             User::factory()->create(),
             ['*']
         );
-        
+
         Storage::fake('public');
 
         $validatedField = 'theme_path';
