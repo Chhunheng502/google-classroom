@@ -42,8 +42,7 @@ class LoginController extends Controller
             ]);
         };
 
-        // FIXME [should use env variable]
-        $token = $user->createToken('http://google-classroom-v1.0.test')->plainTextToken;
+        $token = $user->createToken(config('app.url'))->plainTextToken;
 
         return response()->json([
             'success' => true,

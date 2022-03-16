@@ -2,7 +2,10 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Classroom;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class ClassroomResource extends JsonResource
 {
@@ -14,6 +17,12 @@ class ClassroomResource extends JsonResource
      */
     public function toArray($request)
     {
-        return collect(parent::toArray($request))->except(['created_at', 'updated_at']);
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'section' => $this->section,
+            'theme_path' => $this->theme_path,
+            'meeting_link' => $this->meeting_link 
+        ];
     }
 }

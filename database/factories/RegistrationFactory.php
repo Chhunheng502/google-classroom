@@ -2,12 +2,13 @@
 
 namespace Database\Factories;
 
+use App\Models\Classroom;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Question>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Registration>
  */
-class QuestionFactory extends Factory
+class RegistrationFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,7 +18,8 @@ class QuestionFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'classroom_id' => Classroom::factory(),
+            'role' => 'student'
         ];
     }
 }

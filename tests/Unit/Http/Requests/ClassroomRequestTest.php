@@ -83,7 +83,7 @@ class ClassroomRequestTest extends TestCase
         )->assertJsonValidationErrors($validatedField);
 
         // Update assertion
-        $existingClassroom = Classroom::factory()->for($user, 'teacher')->create();
+        $existingClassroom = Classroom::factory()->for($user, 'admin')->create();
         $newClassroom = Classroom::factory()->make([
             $validatedField => $brokenRule
         ]);

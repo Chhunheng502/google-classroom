@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\File;
 
 class ClassroomController extends Controller
 {
+    // NOTE [do we even need index?]
     public function index()
     {
         return new ClassroomCollection(Auth::user()->classrooms);
@@ -21,7 +22,21 @@ class ClassroomController extends Controller
  
     public function store(ClassroomRequest $request)
     {
-        return new ClassroomResource(Auth::user()->classrooms()->create($request->all()));
+        $classroom = Auth::user()->classrooms()->create($request->all());
+
+        Auth::user()->registrations()->create([
+            'role' => 'admin',
+            'classroom_id' => $classroom->id,
+        ]);
+
+        return new ClassroomResource($classroom);
+    }
+
+    public function show(Classroom $classroom)
+    {
+        return response()->json([
+            'data' => $classroom->load('admin')
+        ]);
     }
 
     public function update(ClassroomRequest $request, Classroom $classroom)
@@ -34,7 +49,7 @@ class ClassroomController extends Controller
 
     public function destroy(Classroom $classroom): Response
     {
-        // FIXME [must change to cloud storage]
+        // FIXME [must change to cloud storage and change theme_path to theme_url]
         File::delete(public_path('storage/') . $classroom->theme_path);
         
         $classroom->delete();

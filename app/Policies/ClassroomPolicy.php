@@ -12,11 +12,11 @@ class ClassroomPolicy
 
     public function update(User $user, Classroom $classroom)
     {
-        return $user->id === $classroom->teacher->id;
+        return $user->id === $classroom->admin->id;
     }
 
     public function delete(User $user, Classroom $classroom)
     {
-        return $user->id === $classroom->teacher->id;
+        return $user->id === $classroom->admin->id;
     }
 }

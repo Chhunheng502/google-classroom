@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Classroom;
+use App\Models\User;
 use App\Policies\ClassroomPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
@@ -38,5 +39,9 @@ class AuthServiceProvider extends ServiceProvider
             
         //     return PersonalAccessToken::findToken($request->token)->tokenable;
         // });
+
+        Gate::define('isAdmin', function (User $user, Classroom $classroom) {
+            return $user->id === $classroom->user_id;
+        });
     }
 }

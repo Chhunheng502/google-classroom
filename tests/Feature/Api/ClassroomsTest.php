@@ -24,7 +24,7 @@ class ClassroomsTest extends TestCase
             ['*']
         );
 
-        $classroom = Classroom::factory()->for($user, 'teacher')->create();
+        $classroom = Classroom::factory()->for($user, 'admin')->create();
 
         $response = $this->getJson(route($this->routePrefix . 'index'));
 
@@ -34,14 +34,10 @@ class ClassroomsTest extends TestCase
             'data' => [
                 [
                     'id' => $classroom->id,
-                    'user_id' => $user->id,
                     'name' => $classroom->name,
-                    'description' => $classroom->description,
                     'section' => $classroom->section,
-                    'room' => $classroom->room,
-                    'subject' => $classroom->subject,
-                    'code' => $classroom->code,
-                    'theme_path' => $classroom->theme_path
+                    'theme_path' => $classroom->theme_path,
+                    'meeting_link' => $classroom->meeting_link
                 ]
             ]
         ]);
@@ -50,7 +46,7 @@ class ClassroomsTest extends TestCase
     /** @test */
     public function can_store_a_classroom()
     {
-        $user = Sanctum::actingAs(
+        Sanctum::actingAs(
             User::factory()->create(),
             ['*']
         );
@@ -66,16 +62,47 @@ class ClassroomsTest extends TestCase
 
         $response->assertJson([
             'data' => [
-                'user_id' => $user->id,
                 'name' => $newClassroom['name'],
-                'description' => $newClassroom['description'],
                 'section' => $newClassroom['section'],
-                'room' => $newClassroom['room'],
-                'subject' => $newClassroom['subject']
+                'theme_path' => $newClassroom['theme_path'],
             ]
         ]);
 
         $this->assertDatabaseHas('classrooms', $newClassroom->toArray());
+    }
+
+    /** @test */
+    public function can_show_a_classroom()
+    {
+        $user = Sanctum::actingAs(
+            User::factory()->create(),
+            ['*']
+        );
+
+        $classroom = Classroom::factory()->for($user, 'admin')->create();
+
+        $response = $this->getJson(route($this->routePrefix . 'show', $classroom->id));
+
+        $response->assertOk();
+
+        $response->assertJson([
+            'data' =>   [
+                'id' => $classroom->id,
+                'name' => $classroom->name,
+                'description' => $classroom->description,
+                'section' => $classroom->section,
+                'room' => $classroom->room,
+                'subject' => $classroom->subject,
+                'theme_path' => $classroom->theme_path,
+                'meeting_link' => $classroom->meeting_link,
+                'admin' => [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'photo_url' => $user->photo_url
+                ]
+            ]
+        ]);
     }
 
     /** @test */
@@ -86,7 +113,7 @@ class ClassroomsTest extends TestCase
             ['*']
         );
 
-        $existingClassroom = Classroom::factory()->for($user, 'teacher')->create();
+        $existingClassroom = Classroom::factory()->for($user, 'admin')->create();
         $newClassroom = collect(Classroom::factory()->raw())->except(['code']);
 
         $response = $this->putJson(
@@ -98,10 +125,8 @@ class ClassroomsTest extends TestCase
             'data' => [
                 'id' => $existingClassroom->id,
                 'name' => $newClassroom['name'],
-                'description' => $newClassroom['description'],
                 'section' => $newClassroom['section'],
-                'room' => $newClassroom['room'],
-                'subject' => $newClassroom['subject']
+                'theme_path' => $newClassroom['theme_path']
             ]
         ]);
 
@@ -119,7 +144,7 @@ class ClassroomsTest extends TestCase
             ['*']
         );
 
-        $existingClassroom = Classroom::factory()->for($user, 'teacher')->create();
+        $existingClassroom = Classroom::factory()->for($user, 'admin')->create();
 
         $this->deleteJson(
             route($this->routePrefix . 'destroy', $existingClassroom)

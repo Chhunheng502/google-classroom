@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('google_id')->nullable();
             $table->string('google_token')->nullable();
             $table->string('google_refreshToken')->nullable();
+            $table->string('photo_url')->default('https://lh3.googleusercontent.com/a/default-user=s75-c'); // NOTE [is there a better way to handle this?]
             $table->timestamps();
         });
     }

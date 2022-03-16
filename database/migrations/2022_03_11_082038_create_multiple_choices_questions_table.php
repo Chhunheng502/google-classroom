@@ -13,12 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('materials', function (Blueprint $table) {
+        Schema::create('multiple_choices_questions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('classroom_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('topic_id')->nullable(); // NOTE [handle null object]
-            $table->string('title');
-            $table->text('description')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('materials');
+        Schema::dropIfExists('multiple_choices_questions');
     }
 };

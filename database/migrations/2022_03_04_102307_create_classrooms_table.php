@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('subject')->nullable();
             $table->string('code', 7)->unique();
             $table->string('theme_path')->default('images/img_breakfast.jpg');
+            $table->string('meeting_link')->nullable();
             $table->timestamps();
         });
     }
