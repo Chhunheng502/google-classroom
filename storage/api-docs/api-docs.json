@@ -1,0 +1,339 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Google Classroom API Documentation",
+        "description": "For frontend developers.",
+        "contact": {
+            "email": "Chhunheng@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/classrooms": {
+            "get": {
+                "tags": [
+                    "Classrooms"
+                ],
+                "operationId": "1da79afb1f755519df70ee931c9d7dd2",
+                "responses": {
+                    "200": {
+                        "description": "Get a list of classrooms.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ClassroomCollection"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Classrooms"
+                ],
+                "operationId": "92fc72023d19c5ee3acfb5474c47778a",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ClassroomRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Create a classroom.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ClassroomResource"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/classrooms/{id}": {
+            "get": {
+                "tags": [
+                    "Classrooms"
+                ],
+                "operationId": "f889fd5b40c2d890f688518f6291dbcd",
+                "responses": {
+                    "200": {
+                        "description": "Display a classroom.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Classroom"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Classrooms"
+                ],
+                "operationId": "c96a08fd558f55f471f0b8ea67c26e61",
+                "responses": {
+                    "200": {
+                        "description": "Update a classroom.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ClassroomResource"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Classrooms"
+                ],
+                "operationId": "61f03fbd84665305cd75aae413a10074",
+                "responses": {
+                    "204": {
+                        "description": "Delete a classroom."
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Classroom": {
+                "title": "Classroom",
+                "description": "Classroom model",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "name": {
+                        "title": "Name",
+                        "description": "Name of the new classroom",
+                        "type": "string",
+                        "example": "CS426 Section 3"
+                    },
+                    "description": {
+                        "title": "Description",
+                        "description": "Description of the new classroom",
+                        "type": "string",
+                        "example": "This Course is recommended for third-year students."
+                    },
+                    "section": {
+                        "title": "Section",
+                        "description": "Section of the new classroom",
+                        "type": "string",
+                        "example": "Section 3"
+                    },
+                    "room": {
+                        "title": "Room",
+                        "description": "Room of the new classroom",
+                        "type": "string",
+                        "example": "Room 204"
+                    },
+                    "subject": {
+                        "title": "Subject",
+                        "description": "Subject of the new classroom",
+                        "type": "string",
+                        "example": "Cloud Computing"
+                    },
+                    "code": {
+                        "title": "Code",
+                        "description": "Code of the new classroom",
+                        "type": "string",
+                        "example": "7ab2BW1"
+                    },
+                    "theme_path": {
+                        "title": "Theme Path",
+                        "description": "Theme path of the new classroom",
+                        "type": "string",
+                        "example": "images/img_breakfast.jpg"
+                    },
+                    "meeting_link": {
+                        "title": "Meeting Link",
+                        "description": "Meeting link of the new classroom",
+                        "type": "string",
+                        "example": "https://meet.google.com/kjn-jtni-zqn"
+                    },
+                    "admin": {
+                        "$ref": "#/components/schemas/User"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Classroom"
+                }
+            },
+            "User": {
+                "title": "User",
+                "description": "User model",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "name": {
+                        "title": "Name",
+                        "description": "Name of the new User",
+                        "type": "string",
+                        "example": "CS426 Section 3"
+                    },
+                    "email": {
+                        "title": "Description",
+                        "description": "Description of the new User",
+                        "type": "string",
+                        "example": "This Course is recommended for third-year students."
+                    },
+                    "photo_url": {
+                        "title": "Photo Url",
+                        "description": "Photo Url of the new User",
+                        "type": "string",
+                        "example": "https://lh3.googleusercontent.com/a/default-user=s75-c"
+                    },
+                    "created_at": {
+                        "title": "Created at",
+                        "description": "Created at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    },
+                    "updated_at": {
+                        "title": "Updated at",
+                        "description": "Updated at",
+                        "type": "string",
+                        "format": "datetime",
+                        "example": "2020-01-27 17:50:45"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "User"
+                }
+            },
+            "ClassroomRequest": {
+                "title": "Classroom request",
+                "description": "Classroom request body data",
+                "required": [
+                    "name"
+                ],
+                "properties": {
+                    "name": {
+                        "title": "Name",
+                        "description": "Name of the new classroom",
+                        "type": "string",
+                        "example": "CS426 Section 3"
+                    },
+                    "description": {
+                        "title": "description",
+                        "description": "Description of the new project",
+                        "type": "string",
+                        "example": "This is new project's description"
+                    },
+                    "section": {
+                        "title": "Section",
+                        "description": "Section of the new classroom",
+                        "type": "string",
+                        "example": "Section 3"
+                    },
+                    "room": {
+                        "title": "Room",
+                        "description": "Room of the new classroom",
+                        "type": "string",
+                        "example": "Room 204"
+                    },
+                    "subject": {
+                        "title": "Subject",
+                        "description": "Subject of the new classroom",
+                        "type": "string",
+                        "example": "Cloud Computing"
+                    }
+                },
+                "type": "object"
+            },
+            "ClassroomCollection": {
+                "title": "ClassroomCollection",
+                "description": "Classroom Collection",
+                "properties": {
+                    "data": {
+                        "title": "Data",
+                        "description": "Data wrapper",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/ClassroomResource"
+                        }
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "ClassroomCollection"
+                }
+            },
+            "ClassroomResource": {
+                "title": "ClassroomResource",
+                "description": "Classroom resource",
+                "properties": {
+                    "id": {
+                        "title": "ID",
+                        "description": "ID",
+                        "type": "integer",
+                        "format": "int64",
+                        "example": 1
+                    },
+                    "name": {
+                        "title": "Name",
+                        "description": "Name of the new classroom",
+                        "type": "string",
+                        "example": "CS426 Section 3"
+                    },
+                    "section": {
+                        "title": "Section",
+                        "description": "Section of the new classroom",
+                        "type": "string",
+                        "example": "Section 3"
+                    },
+                    "theme_path": {
+                        "title": "Theme Path",
+                        "description": "Theme path of the new classroom",
+                        "type": "string",
+                        "example": "images/img_breakfast.jpg"
+                    },
+                    "meeting_link": {
+                        "title": "Meeting Link",
+                        "description": "Meeting link of the new classroom",
+                        "type": "string",
+                        "example": "https://meet.google.com/kjn-jtni-zqn"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "ClassroomResource"
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Classrooms",
+            "description": "API Endpoints of Classrooms"
+        }
+    ],
+    "security": [
+        []
+    ]
+}

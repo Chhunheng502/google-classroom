@@ -14,9 +14,9 @@ use Illuminate\Support\Facades\File;
 
 class ClassroomController extends Controller
 {
-    // NOTE [do we even need index?]
     public function index()
     {
+        // NOTE [do we even need index?]
         return new ClassroomCollection(Auth::user()->classrooms);
     }
  
@@ -54,6 +54,6 @@ class ClassroomController extends Controller
         
         $classroom->delete();
         
-        return response([], 204);
+        return response([], Response::HTTP_NO_CONTENT);
     }
 }
