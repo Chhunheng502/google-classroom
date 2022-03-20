@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('multiple_choices_questions', function (Blueprint $table) {
+        Schema::create('topic_contents', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('classroom_id')->constrained()->cascadeOnDelete();
-            $table->json('options');
+            $table->foreignId('topic_id')->constrained()->cascadeOnDelete();
+            $table->morphs('classwork'); // NOTE [should add contraint]
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('multiple_choices_questions');
+        Schema::dropIfExists('topic_contents');
     }
 };

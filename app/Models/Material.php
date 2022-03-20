@@ -9,10 +9,16 @@ class Material extends Model
 {
     use HasFactory;
 
-    // NOTE use details instead of task_details in here
+    protected $fillable = ['classroom_id'];
 
-    public function attachments()
+    public function classworkDetail()
     {
-        return $this->morphToMany(Attachment::class, 'classwork');
+        return $this->morphOne(ClassworkDetail::class, 'classwork');
+    }
+
+    // NOTE [maybe we can create has one through (to topic)???]
+    public function topic()
+    {
+        return $this->morphOne(TopicContent::class, 'classwork');
     }
 }

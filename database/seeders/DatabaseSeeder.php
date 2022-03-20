@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Classroom;
+use App\Models\Topic;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -15,6 +15,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Classroom::factory(10)->create();
+        Topic::factory(10)->create();
     }
 }

@@ -16,9 +16,6 @@ return new class extends Migration
         Schema::create('materials', function (Blueprint $table) {
             $table->id();
             $table->foreignId('classroom_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('topic_id')->nullable(); // NOTE [handle null object]
-            $table->string('title');
-            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

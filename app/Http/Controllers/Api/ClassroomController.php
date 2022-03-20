@@ -24,6 +24,7 @@ class ClassroomController extends Controller
     {
         $classroom = Auth::user()->classrooms()->create($request->all());
 
+        // SUGGESTION [maybe we should create an event for this?]
         Auth::user()->registrations()->create([
             'role' => 'admin',
             'classroom_id' => $classroom->id,

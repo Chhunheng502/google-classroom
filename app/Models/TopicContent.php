@@ -5,12 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Topic extends Model
+class TopicContent extends Model
 {
     use HasFactory;
 
-    public function contents()
+    protected $fillable = ['topic_id'];
+
+    public function classwork()
     {
-        return $this->hasMany(TopicContent::class);
+        return $this->morphTo();
     }
 }

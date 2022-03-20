@@ -2,13 +2,12 @@
 
 namespace Database\Factories;
 
-use App\Models\Classroom;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Topic>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ClassworkDetail>
  */
-class TopicFactory extends Factory
+class ClassworkDetailFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,8 +17,7 @@ class TopicFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name(),
-            'classroom_id' => Classroom::factory()
+            //
         ];
     }
 }

@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('attachments', function (Blueprint $table) {
+        Schema::create('short_answer_questions', function (Blueprint $table) {
             $table->id();
-            $table->morphs('classwork');
-            $table->json('urls');
+            $table->foreignId('classroom_id')->constrained()->cascadeOnDelete();
+            $table->string('question');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('attachments');
+        Schema::dropIfExists('short_answer_questions');
     }
 };

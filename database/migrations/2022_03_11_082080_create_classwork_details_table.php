@@ -13,8 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('short_anwser_questions', function (Blueprint $table) {
+        Schema::create('classwork_details', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('topic_id')->nullable(); // NOTE [handle null object]
+            $table->morphs('classwork');
+            $table->string('title');
+            $table->text('description')->nullable();
+            $table->json('attachments')->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('short_anwser_questions');
+        Schema::dropIfExists('classwork_details');
     }
 };
