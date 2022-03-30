@@ -2,6 +2,16 @@
 
 namespace App\Providers;
 
+use App\Models\Assignment;
+use App\Models\Material;
+use App\Models\MCQ;
+use App\Models\Quiz;
+use App\Models\SAQ;
+use App\Observers\AssignmentObserver;
+use App\Observers\MaterialObserver;
+use App\Observers\MCQObserver;
+use App\Observers\QuizObserver;
+use App\Observers\SAQObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -32,7 +42,11 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Material::observe(MaterialObserver::class);
+        Assignment::observe(AssignmentObserver::class);
+        Quiz::observe(QuizObserver::class);
+        SAQ::observe(SAQObserver::class);
+        MCQ::observe(MCQObserver::class);
     }
 
     /**

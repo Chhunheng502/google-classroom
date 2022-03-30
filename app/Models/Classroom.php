@@ -25,4 +25,34 @@ class Classroom extends Model
     {
         return $this->hasMany(Registration::class);
     }
+
+    public function topics()
+    {
+        return $this->hasMany(Topic::class);
+    }
+
+    public function materials()
+    {
+        return $this->hasMany(Material::class);
+    }
+
+    public function assignments()
+    {
+        return $this->hasMany(Assignment::class);
+    }
+
+    public function quizzes()
+    {
+        return $this->hasMany(Quiz::class);
+    }
+
+    public function saqs()
+    {
+        return $this->hasMany(SAQ::class);
+    }
+
+    public function mcqs()
+    {
+        return $this->hasMany(MCQ::class);
+    }
 }

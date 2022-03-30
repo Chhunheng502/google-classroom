@@ -177,6 +177,11 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+
+        /**
+         * Other Service Providers
+         */
+        App\Providers\TaskEloquentServiceProvider::class,
     ],
 
     /*

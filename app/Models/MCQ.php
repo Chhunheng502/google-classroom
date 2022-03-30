@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
+use App\Interfaces\TaskEloquent\TaskEloquentInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class MCQ extends Model
+class MCQ extends Model implements TaskEloquentInterface
 {
     use HasFactory;
 

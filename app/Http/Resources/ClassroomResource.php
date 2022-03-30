@@ -2,10 +2,7 @@
 
 namespace App\Http\Resources;
 
-use App\Models\Classroom;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
 
 class ClassroomResource extends JsonResource
 {

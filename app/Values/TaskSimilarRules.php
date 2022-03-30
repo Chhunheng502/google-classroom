@@ -10,7 +10,6 @@ class TaskSimilarRules
     public static function get()
     {
         return [
-            'classroom_id' => ['required', 'numeric'],
             'title' => ['required', 'max:255'],
             'description' => ['nullable'],
             'attachments' => ['nullable', new ArrayOrJson],

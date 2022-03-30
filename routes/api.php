@@ -9,7 +9,6 @@ use App\Http\Controllers\Api\Classwork\Task\MCQController;
 use App\Http\Controllers\Api\Classwork\Task\QuizController;
 use App\Http\Controllers\Api\Classwork\Task\SAQController;
 use App\Http\Controllers\Api\RegistrationController;
-use App\Http\Controllers\Api\StreamController;
 use App\Http\Controllers\Api\ThemeUploadController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -30,7 +29,14 @@ use Illuminate\Support\Facades\Route;
  * _Update new tests
  * _Create new policies for classworks
  * _Organize folders and files (ex: create sub folder)
+ * _Group similar routes together
  *  
+ */
+
+ /* NOTE
+ *
+ * create registration and assign "student" or "teacher" role when inviting
+ * 
  */
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -52,7 +58,7 @@ Route::middleware('auth:sanctum')->group(function() {
         
         Route::get('classrooms', [ClassroomController::class, 'index'])->name('index');
         Route::post('classrooms', [ClassroomController::class, 'store'])->name('store');
-        Route::get('classrooms/{classroom}', [ClassroomController::class, 'show'])->name('show');
+        Route::get('classrooms/{classroom}', [ClassroomController::class, 'show'])->name('show')->can('view', 'classroom');
         Route::put('classrooms/{classroom}', [ClassroomController::class, 'update'])->name('update')->can('update', 'classroom');
         Route::delete('classrooms/{classroom}', [ClassroomController::class, 'destroy'])->name('destroy')->can('delete', 'classroom');
     
@@ -60,24 +66,51 @@ Route::middleware('auth:sanctum')->group(function() {
     });
 
 
-    Route::get('cl/{classroom_id}/all', [ClassworkController::class, 'index']);
+    Route::get('cl/{classroom}/all', [ClassworkController::class, 'index'])->can('viewAnyClasswork', 'classroom');
 
-    Route::post('materials', [MaterialController::class, 'store']);
-    Route::post('assignments', [AssignmentController::class, 'store']);
-    Route::post('quizzes', [QuizController::class, 'store']);
-    Route::post('short-answer-questions', [SAQController::class, 'store']);
-    Route::post('multiple-choices-questions', [MCQController::class, 'store']);
+    Route::prefix('cl/{classroom}')->middleware('can:isAdminOrTeacher,classroom')->group(function() {
+
+        Route::get('materials', [MaterialController::class, 'index']);
+        Route::post('materials', [MaterialController::class, 'store']);
+        Route::get('materials/{material}', [MaterialController::class, 'show']);
+        Route::put('materials/{material}', [MaterialController::class, 'update']);
+        Route::delete('materials/{material}', [MaterialController::class, 'destroy']);
+        
+        Route::get('assignments', [AssignmentController::class, 'index']);
+        Route::post('assignments', [AssignmentController::class, 'store']);
+        Route::get('assignments/{assignment}', [AssignmentController::class, 'show']);
+        Route::put('assignments/{assignment}', [AssignmentController::class, 'update']);
+        Route::delete('assignments/{assignment}', [AssignmentController::class, 'destroy']);
+
+        Route::get('quizzes', [QuizController::class, 'index']);
+        Route::post('quizzes', [QuizController::class, 'store']);
+        Route::get('quizzes/{quiz}', [QuizController::class, 'show']);
+        Route::put('quizzes/{quiz}', [QuizController::class, 'update']);
+        Route::delete('quizzes/{quiz}', [QuizController::class, 'destroy']);
+    
+        Route::get('saqs', [SAQController::class, 'index']);
+        Route::post('saqs', [SAQController::class, 'store']);
+        Route::get('saqs/{saq}', [SAQController::class, 'show']);
+        Route::put('saqs/{saq}', [SAQController::class, 'update']);
+        Route::delete('saqs/{saq}', [SAQController::class, 'destroy']);
+    
+        Route::get('mcqs', [MCQController::class, 'index']);
+        Route::post('mcqs', [MCQController::class, 'store']);
+        Route::get('mcqs/{mcq}', [MCQController::class, 'show']);
+        Route::put('mcqs/{mcq}', [MCQController::class, 'update']);
+        Route::delete('mcqs/{mcq}', [MCQController::class, 'destroy']);
+    });
 });
 
-Route::get('u/{user_identifier}/st/{classroom_slug}', [StreamController::class, 'show']);
+// Route::get('u/{user_identifier}/st/{classroom_slug}', [StreamController::class, 'show']);
 
-Route::get('u/{user_identifier}/cl/{classroom_slug}/all', [ClassworkController::class, 'index']);
-Route::get('u/{user_identifier}/cl/{classroom_slug}/{topic_slug}', [ClassworkController::class, 'show']);
+// Route::get('u/{user_identifier}/cl/{classroom_slug}/all', [ClassworkController::class, 'index']);
+// Route::get('u/{user_identifier}/cl/{classroom_slug}/{topic_slug}', [ClassworkController::class, 'show']);
 
-Route::post('u/{user_identifier}/cl/{classroom_slug}/m', [MaterialController::class, 'store']);
-Route::get('u/{user_identifier}/cl/{classroom_slug}/m/{material_slug}', [MaterialController::class, 'show']);
+// Route::post('u/{user_identifier}/cl/{classroom_slug}/m', [MaterialController::class, 'store']);
+// Route::get('u/{user_identifier}/cl/{classroom_slug}/m/{material_slug}', [MaterialController::class, 'show']);
 
-Route::get('u/{user_identifier}/cl/{classroom_slug}/a/{assignment_slug}', [AssignmentController::class, 'show']);
-Route::get('u/{user_identifier}/cl/{classroom_slug}/q/{quiz_slug}', [QuizController::class, 'show']);
-Route::get('u/{user_identifier}/cl/{classroom_slug}/sa/{saq_slug}', [SAQController::class, 'show']);
-Route::get('u/{user_identifier}/cl/{classroom_slug}/mc/{mcq_slug}', [MCQController::class, 'show']);
+// Route::get('u/{user_identifier}/cl/{classroom_slug}/a/{assignment_slug}', [AssignmentController::class, 'show']);
+// Route::get('u/{user_identifier}/cl/{classroom_slug}/q/{quiz_slug}', [QuizController::class, 'show']);
+// Route::get('u/{user_identifier}/cl/{classroom_slug}/sa/{saq_slug}', [SAQController::class, 'show']);
+// Route::get('u/{user_identifier}/cl/{classroom_slug}/mc/{mcq_slug}', [MCQController::class, 'show']);

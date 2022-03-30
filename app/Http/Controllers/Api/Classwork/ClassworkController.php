@@ -4,17 +4,15 @@ namespace App\Http\Controllers\Api\Classwork;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\TopicResource;
-use App\Models\Topic;
+use App\Models\Classroom;
 use Illuminate\Http\Request;
 
 class ClassworkController extends Controller
 {
-    public function index($classroom_id)
+    public function index(Classroom $classroom)
     {
         return TopicResource::collection(
-            Topic::with('contents.classwork.classworkDetail')
-                ->where('classroom_id', $classroom_id)
-                ->get()
+            $classroom->topics
         );
     }
 

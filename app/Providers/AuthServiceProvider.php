@@ -3,13 +3,12 @@
 namespace App\Providers;
 
 use App\Models\Classroom;
+use App\Models\Registration;
 use App\Models\User;
 use App\Policies\ClassroomPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-use Laravel\Sanctum\PersonalAccessToken;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -31,17 +30,12 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        // NOTE [you don't need to customer Auth user by your own, you can
-        // use Auth::user() right after you include bearer token in your request]
-        // => delete it in the new version
-        
-        // Auth::viaRequest('custom-token', function (Request $request) {
-            
-        //     return PersonalAccessToken::findToken($request->token)->tokenable;
-        // });
-
-        Gate::define('isAdmin', function (User $user, Classroom $classroom) {
-            return $user->id === $classroom->user_id;
+        Gate::define('isAdminOrTeacher', function (User $user, Classroom $classroom) {
+            return Registration::where('user_id', $user->id)
+                            ->where('classroom_id', $classroom->id)
+                            ->where('role', 'admin')
+                            ->orWhere('role', 'teacher')
+                            ->exists();
         });
     }
 }

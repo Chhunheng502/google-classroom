@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
+use App\Interfaces\TaskEloquent\TaskEloquentInterface;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Assignment extends Model
+class Assignment extends Model implements TaskEloquentInterface
 {
     use HasFactory;
 

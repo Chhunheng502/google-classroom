@@ -13,7 +13,6 @@ class MaterialRequest extends FormRequest
     public function rules()
     {
         return [
-            'classroom_id' => ['required', 'numeric'],
             'title' => ['required', 'max:255'],
             'description' => ['nullable'],
             'attachments' => ['nullable', new ArrayOrJson],
