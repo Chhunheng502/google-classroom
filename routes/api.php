@@ -36,6 +36,8 @@ use Illuminate\Support\Facades\Route;
  /* NOTE
  *
  * create registration and assign "student" or "teacher" role when inviting
+ * append v1 after api routes
+ * create v2 for your current system
  * 
  */
 

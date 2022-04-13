@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Classwork;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MaterialRequest;
+use App\Http\Resources\MaterialCollection;
 use App\Http\Resources\MaterialResource;
 use App\Models\Classroom;
 use App\Models\Material;
@@ -14,7 +15,7 @@ class MaterialController extends Controller
 {
     public function index(Classroom $classroom)
     {
-        return MaterialResource::collection(
+        return new MaterialCollection(
             $classroom->materials
         );
     }

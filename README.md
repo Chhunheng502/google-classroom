@@ -29,4 +29,4 @@ php artisan key:generate
 
 ### Notes
 
-In this version, I have implemented many tests on http requests to Classroom data controller and some request validations on those data. I also managed to test file upload (classroom theme) to controller successfully after many attempts. However, there's still a problem with GoogleAuthTest. Even though authenticating with google is successful on the web page, but testing using mock doesn't work quite well. Nevertheless, I have learned something new.
+The main focus is on frontend for this version. I managed to find a nice pre-built UI components in which I don't need to rebuild from scratch. Vuetify is awesome !!!. I use vue framework for this project and this time I don't use inertia server-side rendering anyone. I configured everything on my own. Ohhh yeah... We will need to create api version since the frontend I'm building is not totally google classroom clone. and we will need to change the project's name to *** Dodoco ***.
