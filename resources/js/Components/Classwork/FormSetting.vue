@@ -22,6 +22,7 @@
                 <v-text-field
                     type="number"
                     value="100"
+                    v-model="form.points"
                     :rules="rules"
                     outlined
                 >
@@ -31,7 +32,10 @@
         <v-list-item v-show="! (title == 'Material')">
             <div class="d-flex">
                 <v-icon class="mr-3">mdi-clipboard-text-clock</v-icon>
-                <v-datetime-picker label="Due Date" v-model="datetime">
+                <v-datetime-picker
+                    label="Due Date"
+                    v-model="form.due_date"
+                >
                     <template slot="dateIcon">
                     <v-icon>mdi-calendar</v-icon>
                     </template>
@@ -41,7 +45,7 @@
                 </v-datetime-picker>
             </div>
         </v-list-item>
-        <v-list-item>
+        <!-- <v-list-item>
             <div class="d-flex">
                 <v-icon class="mr-3">mdi-calendar-arrow-right</v-icon>
                 <v-datetime-picker label="Schedule Post" v-model="datetime">
@@ -53,14 +57,15 @@
                     </template>
                 </v-datetime-picker>
             </div>
-        </v-list-item>
+        </v-list-item> -->
     </v-list>
 </template>
 
 <script>
 export default {
     props: {
-        title: String
+        title: String,
+        form: Object
     },
 
     data() {

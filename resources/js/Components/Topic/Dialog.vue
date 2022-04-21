@@ -21,6 +21,7 @@
           <v-container>
             <v-text-field
               label="Topic"
+              v-model="form.name"
             ></v-text-field>
           </v-container>
         </v-card-text>
@@ -36,7 +37,7 @@
           <v-btn
             color="blue darken-1"
             text
-            @click="dialog = false"
+            @click="save()"
           >
             Save
           </v-btn>
@@ -47,9 +48,23 @@
 </template>
 
 <script>
-  export default {
-    data: () => ({
-      dialog: false,
-    }),
+export default {
+  data: () => ({
+    form: {
+      name: ''
+    },
+    dialog: false,
+  }),
+
+  methods: {
+    save() {
+      this.$store.dispatch('createTopic', {
+        classroom: {id: 1},
+        form: this.form
+      })
+
+      this.dialog = false
+    }
   }
+}
 </script>

@@ -1,7 +1,13 @@
 let getters = {
-    materials: state => {
-        return state.materials
-    }
+    classworks: state => {
+        return state.classworks
+    },
+    classwork: state => {
+        return state.classwork
+    },
+    topics: state => {
+        return state.topics
+    },
 }
 
-export default  getters
+export default getters

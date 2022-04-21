@@ -8,7 +8,9 @@ use App\Http\Controllers\Api\Classwork\Task\AssignmentController;
 use App\Http\Controllers\Api\Classwork\Task\MCQController;
 use App\Http\Controllers\Api\Classwork\Task\QuizController;
 use App\Http\Controllers\Api\Classwork\Task\SAQController;
+use App\Http\Controllers\Api\Classwork\TopicController;
 use App\Http\Controllers\Api\RegistrationController;
+use App\Http\Controllers\Api\StudentWorkController;
 use App\Http\Controllers\Api\ThemeUploadController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -72,6 +74,9 @@ Route::middleware('auth:sanctum')->group(function() {
 
     Route::prefix('cl/{classroom}')->middleware('can:isAdminOrTeacher,classroom')->group(function() {
 
+        Route::get('topics', [TopicController::class, 'index']);
+        Route::post('topics', [TopicController::class, 'store']);
+
         Route::get('materials', [MaterialController::class, 'index']);
         Route::post('materials', [MaterialController::class, 'store']);
         Route::get('materials/{material}', [MaterialController::class, 'show']);
@@ -101,6 +106,10 @@ Route::middleware('auth:sanctum')->group(function() {
         Route::get('mcqs/{mcq}', [MCQController::class, 'show']);
         Route::put('mcqs/{mcq}', [MCQController::class, 'update']);
         Route::delete('mcqs/{mcq}', [MCQController::class, 'destroy']);
+
+        Route::get('works', [StudentWorkController::class, 'index']);
+        Route::post('u/{user}/works', [StudentWorkController::class, 'store']);
+        Route::get('u/{user}/works', [StudentWorkController::class, 'show']);
     });
 });
 

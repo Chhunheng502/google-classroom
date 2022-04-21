@@ -20,4 +20,9 @@ class Registration extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function works()
+    {
+        return $this->hasMany(StudentWork::class);
+    }
 }

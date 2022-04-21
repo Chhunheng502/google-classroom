@@ -2,20 +2,21 @@
 
 namespace App\Http\Controllers\Api\Classwork;
 
+use App\Events\ClassworkUpdated;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MaterialRequest;
-use App\Http\Resources\MaterialCollection;
 use App\Http\Resources\MaterialResource;
 use App\Models\Classroom;
 use App\Models\Material;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
+// FIXME [adhere to single responsibility principle]
 class MaterialController extends Controller
 {
     public function index(Classroom $classroom)
     {
-        return new MaterialCollection(
+        return MaterialResource::collection(
             $classroom->materials
         );
     }
@@ -25,12 +26,6 @@ class MaterialController extends Controller
         $material =  $classroom->materials()->create();
 
         $material->classworkDetail()->create($request->validated());
-
-        if ($request->topic_id) {
-            $material->topic()->create([
-                'topic_id' => $request->topic_id
-            ]);
-        }
 
         return new MaterialResource($material);
     }
@@ -49,11 +44,7 @@ class MaterialController extends Controller
         $material->update();
         $material->classworkDetail->update($request->validated());
 
-        if ($request->topic_id) {
-            $material->topic->update([
-                'topic_id' => $request->topic_id
-            ]);
-        }
+        ClassworkUpdated::dispatch($material);
 
         return new MaterialResource($material);
     }

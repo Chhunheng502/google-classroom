@@ -2,13 +2,17 @@
 
 namespace App\Observers;
 
+use App\Interfaces\TaskEloquent\TaskEloquentInterface;
 use App\Models\Quiz;
+use App\Traits\TaskObserver;
+use Illuminate\Support\Facades\App;
 
 class QuizObserver
 {
-    public function deleted(Quiz $quiz)
+    use TaskObserver;
+
+    public function __construct()
     {
-        $quiz->classworkDetail()->delete();
-        $quiz->taskDetail()->delete();
+        App::bind(TaskEloquentInterface::class, Quiz::class);
     }
 }

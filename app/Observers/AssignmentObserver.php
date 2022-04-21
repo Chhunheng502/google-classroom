@@ -2,14 +2,17 @@
 
 namespace App\Observers;
 
+use App\Interfaces\TaskEloquent\TaskEloquentInterface;
 use App\Models\Assignment;
+use App\Traits\TaskObserver;
+use Illuminate\Support\Facades\App;
 
 class AssignmentObserver
 {
-    // NOTE [this event might not be triggered due to some issue - database connection , ect.]
-    public function deleted(Assignment $assignment)
+    use TaskObserver;
+
+    public function __construct()
     {
-        $assignment->classworkDetail()->delete();
-        $assignment->taskDetail()->delete();
+        App::bind(TaskEloquentInterface::class, Assignment::class);
     }
 }

@@ -2,13 +2,17 @@
 
 namespace App\Observers;
 
+use App\Interfaces\TaskEloquent\TaskEloquentInterface;
 use App\Models\SAQ;
+use App\Traits\TaskObserver;
+use Illuminate\Support\Facades\App;
 
 class SAQObserver
 {
-    public function deleted(SAQ $saq)
+    use TaskObserver;
+
+    public function __construct()
     {
-        $saq->classworkDetail()->delete();
-        $saq->taskDetail()->delete();
+        App::bind(TaskEloquentInterface::class, SAQ::class);
     }
 }

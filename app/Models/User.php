@@ -61,4 +61,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Registration::class)->with('classroom');
     }
+
+    public function works()
+    {
+        return $this->hasManyThrough(StudentWork::class, Registration::class);
+    }
 }

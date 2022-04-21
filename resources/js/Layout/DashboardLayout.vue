@@ -64,8 +64,8 @@ export default {
         return {
             items: [
               { title: 'Home', icon: 'mdi-home-city', url: '/home' },
-              { title: 'Materials', icon: 'mdi-book', url: '/cl/classroom_id/materials' },
-              { title: 'Tasks', icon: 'mdi-clipboard-text', url: '/cl/classroom_id/tasks' },
+              { title: 'Announcements', icon: 'mdi-bullhorn', url: '/cl/classroom_id/announcements' },
+              { title: 'Classworks', icon: 'mdi-clipboard-text', url: '/cl/1/classworks' },
               { title: 'Reports', icon: 'mdi-chart-bar', url: '/cl/classroom_id/reports' },
               { title: 'Discussions', icon: 'mdi-forum', url: '/cl/classroom_id/discussions' },
             ]

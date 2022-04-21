@@ -1,5 +1,7 @@
 window._ = require('lodash');
 
+window.moment = require('moment')
+
 try {
     require('bootstrap');
 } catch (e) {}
@@ -13,7 +15,7 @@ try {
 window.axios = require('axios');
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-window.axios.defaults.headers.common['Authorization'] = "Bearer qbXiIVz1XUZ06hTcVq5FZvVQviOuKzQXv6ZGhzlC"; // FIXME [this isn't right !!!]
+window.axios.defaults.headers.common['Authorization'] = "Bearer cYeBrzHJJfLCxuHz01lWBV3mAc2RPjze7uYOd5ol"; // FIXME [this isn't right !!!]
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

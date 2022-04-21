@@ -31,6 +31,11 @@ class Classroom extends Model
         return $this->hasMany(Topic::class);
     }
 
+    public function noTopicClassworks()
+    {
+        return $this->hasMany(NoTopicClassworkMapping::class);
+    }
+
     public function materials()
     {
         return $this->hasMany(Material::class);
@@ -54,5 +59,10 @@ class Classroom extends Model
     public function mcqs()
     {
         return $this->hasMany(MCQ::class);
+    }
+
+    public function studentWorks()
+    {
+        return $this->hasManyThrough(StudentWork::class, Registration::class);
     }
 }

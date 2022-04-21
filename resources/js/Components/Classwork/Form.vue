@@ -15,10 +15,10 @@
                   sm="8"
                 >
                 <v-text-field
-                    v-model="form.first"
-                    :rules="rules.name"
+                    v-model="form.title"
                     color="purple darken-2"
-                    label="Title"
+                    :rules="rules.title"
+                    :label="title == 'Question' ? 'Question' : 'Title'"
                     required
                 ></v-text-field>
                 </v-col>
@@ -27,11 +27,13 @@
                   sm="4"
                 >
                 <v-select
-                    v-model="form.favoriteAnimal"
-                    :items="animals"
-                    :rules="rules.animal"
+                    v-model="form.topic_id"
+                    :items="topics"
+                    item-text="name"
+                    item-value="id"
                     color="pink"
                     label="No Topic"
+                    clearable
                     required
                 >
                   <template v-slot:prepend-item>
@@ -42,16 +44,17 @@
                     </v-list-item>
                     <v-divider class="mt-2"></v-divider>
                   </template>
+                  
                 </v-select>
                 </v-col>
                 <v-col cols="12">
                 <v-textarea
-                    v-model="form.bio"
+                    v-model="form.description"
                     color="teal"
                 >
                     <template v-slot:label>
                     <div>
-                        Description <small>(optional)</small>
+                        {{ title == 'Question' ? 'Instruction' : 'Description' }} <small>(optional)</small>
                     </div>
                     </template>
                 </v-textarea>
@@ -69,6 +72,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 import TopicDialog from '@/Components/Topic/Dialog'
 
 export default {
@@ -76,54 +81,28 @@ export default {
     TopicDialog
   },
 
-  data () {
-    const defaultForm = Object.freeze({
-      first: '',
-      last: '',
-      bio: '',
-      favoriteAnimal: '',
-      age: null,
-      terms: false,
-    })
+  props: {
+    title: String,
+    form: Object
+  },
 
+  data() {
     return {
-      form: Object.assign({}, defaultForm),
       rules: {
-        age: [
-          val => val < 10 || `I don't believe you!`,
-        ],
-        animal: [val => (val || '').length > 0 || 'This field is required'],
-        name: [val => (val || '').length > 0 || 'This field is required'],
-      },
-      animals: ['Dog', 'Cat', 'Rabbit', 'Turtle', 'Snake'],
-      conditions: false,
-      content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc.',
-      snackbar: false,
-      terms: false,
-      defaultForm,
-    }
+          title: [val => (val || '').length > 0 || 'This field is required']
+        }
+      }
   },
 
   computed: {
-    formIsValid () {
-      return (
-        this.form.first &&
-        this.form.last &&
-        this.form.favoriteAnimal &&
-        this.form.terms
-      )
-    },
+      ...mapGetters([
+          'topics',
+          'errors'
+      ]),
   },
 
-  methods: {
-    resetForm () {
-      this.form = Object.assign({}, this.defaultForm)
-      this.$refs.form.reset()
-    },
-    submit () {
-      this.snackbar = true
-      this.resetForm()
-    },
-  },
+  mounted() {
+    this.$store.dispatch('fetchTopics', {id: 1})
+  }
 }
 </script>

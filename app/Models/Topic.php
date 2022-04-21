@@ -9,8 +9,10 @@ class Topic extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name'];
+
     public function contents()
     {
-        return $this->hasMany(TopicContent::class);
+        return $this->hasMany(TopicContent::class)->orderBy('updated_at');
     }
 }

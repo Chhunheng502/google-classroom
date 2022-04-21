@@ -15,6 +15,10 @@ return new class extends Migration
     {
         Schema::create('student_works', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('registration_id')->constrained()->cascadeOnDelete();
+            $table->morphs('task');
+            $table->json('answers');
+            $table->string('mark')->nullable();
             $table->timestamps();
         });
     }

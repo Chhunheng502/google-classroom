@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->morphs('task');
             $table->string('points')->nullable();
-            $table->timestamp('due_date')->nullable();
+            $table->dateTime('due_date')->nullable();
             $table->timestamps();
         });
     }

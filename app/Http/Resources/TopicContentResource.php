@@ -15,9 +15,9 @@ class TopicContentResource extends JsonResource
     public function toArray($request)
     {
         if (str_contains($this->classwork_type, 'Material')) {
-            return collect(new MaterialResource($this->classwork))->except(['topic_id']);
+            return collect(new MaterialResource($this->classwork));
         }
 
-        return collect(new TaskResource($this->classwork))->except(['topic_id']);
+        return collect(new TaskResource($this->classwork));
     }
 }

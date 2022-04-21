@@ -1,6 +1,11 @@
 let state = {
     isLoading: true,
-    materials: [],
+    classworks: {
+        noTopic: {},
+        topics: {}
+    },
+    classwork: new Object(),
+    topics: [],
 }
 
 export default state

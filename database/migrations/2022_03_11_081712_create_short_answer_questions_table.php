@@ -16,7 +16,6 @@ return new class extends Migration
         Schema::create('short_answer_questions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('classroom_id')->constrained()->cascadeOnDelete();
-            $table->string('question');
             $table->timestamps();
         });
     }

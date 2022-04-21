@@ -2,13 +2,17 @@
 
 namespace App\Observers;
 
+use App\Interfaces\TaskEloquent\TaskEloquentInterface;
 use App\Models\MCQ;
+use App\Traits\TaskObserver;
+use Illuminate\Support\Facades\App;
 
 class MCQObserver
 {
-    public function deleted(MCQ $mcq)
+    use TaskObserver;
+
+    public function __construct()
     {
-        $mcq->classworkDetail()->delete();
-        $mcq->taskDetail()->delete();
+        App::bind(TaskEloquentInterface::class, MCQ::class);
     }
 }

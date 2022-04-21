@@ -34,7 +34,7 @@ class TaskResource extends JsonResource
 
     public function hasMergeableType()
     {
-        return collect(['quiz', 'saq', 'mcq'])
+        return collect(['quiz', 'mcq'])
                 ->contains($this->taskType);
     }
 
@@ -44,10 +44,6 @@ class TaskResource extends JsonResource
         if ($this->taskType === 'quiz') {
             return [
                 'url' => $this->url
-            ];
-        } else if ($this->taskType === 'saq') {
-            return [
-                'question' => $this->question
             ];
         } else if ($this->taskType === 'mcq') {
             return [

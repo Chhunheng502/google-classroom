@@ -12,9 +12,6 @@ class SAQRequest extends FormRequest
     
     public function rules()
     {
-        return collect(TaskSimilarRules::get())->merge([
-                'question' => ['required', 'max:255']
-            ]
-        )->toArray();
+        return TaskSimilarRules::get();
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Events\ClassworkUpdated;
+use App\Listeners\UpdateTopic;
 use App\Models\Assignment;
 use App\Models\Material;
 use App\Models\MCQ;
@@ -32,6 +34,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         SocialiteWasCalled::class => [
             GoogleExtendSocialite::class.'@handle',
+        ],
+        ClassworkUpdated::class => [
+            UpdateTopic::class,
         ],
     ];
 
